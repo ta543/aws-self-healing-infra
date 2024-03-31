@@ -1,0 +1,56 @@
+# name: Microservices CI/CD Pipeline
+
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+
+# jobs:
+#   build-and-test:
+#     name: Build and Test Microservices
+#     runs-on: ubuntu-latest
+
+#     strategy:
+#       matrix:
+#         node-version: [16.x]
+#         python-version: [3.9]
+#         ruby-version: ['3.0']
+
+#     steps:
+#     - name: Checkout code
+#       uses: actions/checkout@v2
+      
+#     # Generate a shortened commit SHA
+#     - name: Get short SHA
+#       id: sha
+#       run: echo "::set-output name=sha::$(echo ${GITHUB_SHA::8})"
+      
+#     # Setup environments...
+#     # (Omitted for brevity; see previous workflow examples for the setup steps)
+
+#     # Log in to Docker Hub to push images
+#     - name: Log in to Docker Hub
+#       uses: docker/login-action@v1
+#       with:
+#         username: ${{ secrets.DOCKER_USERNAME }}
+#         password: ${{ secrets.DOCKER_PASSWORD }}
+
+#     # Build and push Docker images for each microservice with specific tags
+#     - name: Build and Push Docker image (Users Microservice)
+#       run: |
+#         cd microservices/users
+#         docker build -t ta543/project-users:${{ steps.sha.outputs.sha }} .
+#         docker push ta543/project-users:${{ steps.sha.outputs.sha }}
+
+#     - name: Build and Push Docker image (Orders Microservice)
+#       run: |
+#         cd microservices/orders
+#         docker build -t ta543/project-orders:${{ steps.sha.outputs.sha }} .
+#         docker push ta543/project-orders:${{ steps.sha.outputs.sha }}
+
+#     - name: Build and Push Docker image (Products Microservice)
+#       run: |
+#         cd microservices/products
+#         docker build -t ta543/project-products:${{ steps.sha.outputs.sha }} .
+#         docker push ta543/project-products:${{ steps.sha.outputs.sha }}

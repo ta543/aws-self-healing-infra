@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'AWS Self-Healing Infrastructure: RDS Database'
+
+Resources:
+  RDSDBInstance:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t3.micro
+      AllocatedStorage: 20
+      Engine: mysql
+      EngineVersion: '8.0.22'
+      MasterUsername: adminuser
+      MasterUserPassword: SecurePassword123!
+      DBSubnetGroupName: !Ref DBSubnetGroup
+      VPCSecurityGroups: [ "sg-1234567890abcdef0" ]
+      MultiAZ: true
+      StorageType: gp2
+Outputs:
+  DBInstanceEndpoint:
+    Description: The connection endpoint for the DB instance
+    Value: !GetAtt RDSDBInstance.Endpoint.Address

@@ -1,0 +1,32 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+    commands:
+      - echo Installing source NPM dependencies...
+      - npm install
+  
+  pre_build:
+    commands:
+      - echo Running lint checks...
+      - npm run lint
+  
+  build:
+    commands:
+      - echo Running tests...
+      - npm test
+      - echo Building the Docker image...
+      - docker build -t aws-self-healing/products:$CODEBUILD_RESOLVED_SOURCE_VERSION .
+  
+  post_build:
+    commands:
+      - echo Pushing the Docker image...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - docker push aws-self-healing/products:$CODEBUILD_RESOLVED_SOURCE_VERSION
+      - echo Writing image definitions file...
+      - printf '[{"name":"products-service","imageUri":"aws-self-healing/products:%s"}]' $CODEBUILD_RESOLVED_SOURCE_VERSION > imagedefinitions.json
+
+artifacts:
+  files: imagedefinitions.json

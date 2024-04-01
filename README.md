@@ -3,11 +3,6 @@
 ## Project Overview 📜
 This project aims to design and implement a self-healing infrastructure on AWS specifically tailored for hosting a microservices architecture. Focusing on **automating recovery from failures**, **scaling resources as necessary**, and embracing **continuous deployment practices**, it leverages containerization, managed Kubernetes, and advanced AWS services to ensure robustness and efficiency.
 
-### Key Goals 🎯
-- **Automate recovery** from service failures.
-- **Scale resources** dynamically based on demand.
-- **Continuous deployment** for rapid iteration.
-
 ### Technology Stack 🛠️
 - **Containerization:** Utilizing Docker to encapsulate microservices.
 - **Orchestration:** Managed Kubernetes via Amazon EKS.
